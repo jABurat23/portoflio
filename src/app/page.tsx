@@ -12,7 +12,7 @@ import MobileLayout from "@/components/MobileLayout";
 import About from "@/components/About";
 
 type Stage = "boot" | "skeleton" | "ready";
-const SKELETON_THRESHOLD_MS = 4000;
+const SKELETON_THRESHOLD_MS = 6000; // Show skeleton if boot takes longer than this - 6s = 6000ms | 1000ms = 1s
 
 export default function Home() {
   const [stage, setStage] = useState<Stage>("boot");

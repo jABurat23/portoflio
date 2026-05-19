@@ -21,19 +21,6 @@ interface Command {
     "  history       — show command history",
     "  clear         — clear terminal",
   ],
-  neofetch: [
-    "  agstn404@personal.archive",
-    "  ─────────────────────────",
-    "  os       windows 11",
-    "  host     personal.archive v1",
-    "  shell    archive.terminal",
-    "  location cebu city, ph · 7°04′N 125°36′E",
-    "  stack    rust · tauri · next.js · typescript",
-    "  focus    systems builder · desktop tooling",
-    "  github   github.com/jABurat23",
-    "  status   building winrt v3",
-    "  uptime   est. 2024",
-  ],
   contact: [],
   cv: [
     "fetching cv.pdf...",
@@ -312,6 +299,45 @@ useEffect(() => {
     ];
     setHistory((prev) => [...prev, { input: cmd, output }]);
     setInput("");
+
+    if (cmdLower === "neofetch") {
+  setHistory((prev) => [...prev, { input: cmd, output: ["fetching sys info..."] }]);
+  setInput("");
+  try {
+    const res = await fetch("/api/neofetch");
+    const data = await res.json();
+    const lines = [
+      `  ${data.user}`,
+      "  ─────────────────────────",
+      `  os       ${data.os}`,
+      `  host     ${data.host}`,
+      `  shell    ${data.shell}`,
+      `  location ${data.location}`,
+      `  stack    ${data.stack}`,
+      `  focus    ${data.focus}`,
+      `  github   ${data.github}`,
+      `  repos    ${data.repos} public`,
+      `  stars    ${data.stars} total`,
+      `  status   ${data.status}`,
+      `  site     ${data.site}`,
+      `  uptime   ${data.uptime}`,
+      "",
+    ];
+    setHistory((prev) => {
+      const updated = [...prev];
+      updated[updated.length - 1] = { input: "", output: lines };
+      return updated;
+    });
+  } catch {
+    setHistory((prev) => {
+      const updated = [...prev];
+      updated[updated.length - 1] = { input: "", output: ["failed to fetch sys info."] };
+      return updated;
+    });
+  }
+  return;
+}
+
   };
 
   const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {

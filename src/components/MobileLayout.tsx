@@ -362,6 +362,64 @@ function MobileProjects() {
   );
 }
 
+function MobileAbout() {
+  const facts = [
+    { key: "age",       value: "18" },
+    { key: "location",  value: "cebu city, ph" },
+    { key: "status",    value: "bsit freshman" },
+    { key: "type",      value: "self-taught + formal" },
+    { key: "exp",       value: "~2 years coding" },
+    { key: "current",   value: "building winrt v3" },
+    { key: "idle_mode", value: "sleep | play games" },
+    { key: "uptime",    value: "est. 2024" },
+  ];
+
+  return (
+    <motion.section
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, delay: 0.1 }}
+      style={{ marginBottom: "4rem" }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: "1rem", borderBottom: "1px solid var(--border)", paddingBottom: "0.75rem", marginBottom: 0 }}>
+        <span style={{ fontSize: "9px", letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--text-3)" }}>about</span>
+        <span style={{ fontSize: "9px", color: "var(--text-3)" }}>/ sys.info</span>
+      </div>
+
+      {/* statement — full width on mobile */}
+      <div style={{ padding: "1.5rem 0", borderBottom: "1px solid var(--border)" }}>
+        <div style={{ fontSize: "9px", letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--text-3)", marginBottom: "1rem" }}>// README.md</div>
+        <div style={{ display: "flex", flexDirection: "column", gap: "1rem", fontFamily: "var(--sans)", fontSize: "13px", lineHeight: 1.8, color: "var(--text-2)", fontWeight: 300 }}>
+          <p>i'm agustin — 18, from cebu. i build software because i want to know how things actually work, not just that they do.</p>
+          <p>started coding almost two years ago, self-taught, inconsistent. now i'm a <span style={{ color: "var(--accent)", fontFamily: "var(--mono)", fontSize: "11px" }}>bsit freshman</span> doing both at once.</p>
+          <p>i don't build things to put on a resume. i build them because i need them, or because someone else might.</p>
+          <p style={{ color: "var(--text-3)", fontStyle: "italic", fontSize: "12px" }}>when the quota runs out — i sleep, or i open a game. the code will still be there tomorrow.</p>
+        </div>
+        <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap", marginTop: "1.25rem" }}>
+          {["Rust", "Tauri", "TypeScript", "Next.js", "GSAP"].map((tag) => (
+            <span key={tag} style={{ fontFamily: "var(--mono)", fontSize: "8px", letterSpacing: "0.1em", textTransform: "uppercase", padding: "2px 7px", border: "1px solid var(--border)", color: "var(--text-3)" }}>{tag}</span>
+          ))}
+        </div>
+      </div>
+
+      {/* config — full width on mobile */}
+      <div style={{ padding: "1.5rem 0" }}>
+        <div style={{ fontSize: "9px", letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--text-3)", marginBottom: "1rem" }}>// config.toml</div>
+        <div style={{ fontFamily: "var(--mono)", fontSize: "11px", color: "var(--accent)", marginBottom: "0.5rem" }}>[user.agstn404]</div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          {facts.map((f, i) => (
+            <div key={f.key} style={{ display: "flex", alignItems: "baseline", padding: "0.5rem 0", borderBottom: i < facts.length - 1 ? "1px solid var(--border)" : "none" }}>
+              <span style={{ color: "var(--text-3)", minWidth: "90px", fontSize: "10px", fontFamily: "var(--mono)" }}>{f.key}</span>
+              <span style={{ color: "var(--text-3)", marginRight: "0.5rem", fontSize: "10px" }}>=</span>
+              <span style={{ color: "var(--text)", fontSize: "10px", fontFamily: "var(--mono)" }}>"{f.value}"</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </motion.section>
+  );
+} 
+
 // ── Mobile Footer ─────────────────────────────────────────────────────────────
 function MobileFooter() {
   const footerRef = useRef<HTMLElement>(null);
@@ -429,7 +487,7 @@ export default function MobileLayout() {
   return (
     <div style={{ width: "100%", boxSizing: "border-box", padding: "2rem 1.5rem 0" }}>
       <MobileHero />
-      <About />
+      <MobileAbout />
       <MobileProjects />
       <MobileFooter />
     </div>

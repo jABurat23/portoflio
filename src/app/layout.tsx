@@ -18,6 +18,12 @@ const ibmSans = IBM_Plex_Sans({
 });
 
 export const metadata: Metadata = {
+  // Fixes the Open Graph resolving warning in terminal
+  metadataBase: new URL(
+    process.env.NODE_ENV === "production"
+      ? "https://portoflio-taupe-eight.vercel.app"
+      : "http://localhost:3000"
+  ),
   title: "agstn404 — personal archive",
   description: "systems builder. desktop tooling. cebu, ph. i build things that live close to the metal.",
   keywords: ["systems builder", "rust", "tauri", "desktop tooling", "cebu", "portfolio"],
@@ -26,7 +32,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://agstn404.vercel.app",
+    url: "https://portoflio-taupe-eight.vercel.app",
     title: "agstn404 — personal archive",
     description: "systems builder. desktop tooling. cebu, ph. i build things that live close to the metal.",
     siteName: "personal.archive",
@@ -45,7 +51,7 @@ export const metadata: Metadata = {
     description: "systems builder. desktop tooling. cebu, ph.",
     images: ["/og.png"],
   },
-};
+};  
 
 export default function RootLayout({
   children,
