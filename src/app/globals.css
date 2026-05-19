@@ -1,26 +1,82 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+:root,
+[data-theme="dark"] {
+  --bg: #0a0a0c;
+  --bg-2: #0f0f14;
+  --bg-3: #161620;
+  --border: #1a1a28;
+  --text: #e8e4dc;
+  --text-2: #7a7888;
+  --text-3: #46465a;
+  --accent: #c8a96e;
+  --accent-dim: #8a7248;
+  --green: #2a5c3f;
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'IBM Plex Sans', sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+[data-theme="light"] {
+  --bg: #f4f1eb;
+  --bg-2: #ede9e0;
+  --bg-3: #e4dfd4;
+  --border: #ccc8bc;
+  --text: #1a1814;
+  --text-2: #6b6860;
+  --text-3: #9a9890;
+  --accent: #8a6a2e;
+  --accent-dim: #6a4e1e;
+  --green: #2a5c3f;
+  --mono: 'IBM Plex Mono', monospace;
+  --sans: 'IBM Plex Sans', sans-serif;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  cursor: none !important;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); }
+
+/* ==========================================================================
+    FORCE HIDE DEFAULT BROWSER POINTERS (TAILWIND v4 OVERRIDE)
+   ========================================================================== */
+
+/* 1. Explicitly targets every possible interactive tag and their hover states */
+html, body, *, 
+a, a *, 
+button, button *, 
+input, select, textarea,
+[role="button"], [type="button"], [type="submit"] {
+  cursor: none !important;
+}
+
+/* 2. Forces Tailwind's active hover class states to drop the hand cursor too */
+*:hover, a:hover, button:hover, [role="button"]:hover {
+  cursor: none !important;
 }
