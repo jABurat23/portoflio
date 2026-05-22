@@ -1,25 +1,18 @@
 const CACHE_NAME = "agstn404-archive-v1";
 const OFFLINE_URL = "/offline";
 
-const STATIC_ASSETS = [
-  "/",
-  "/offline",
-  "/manifest.json",
-  "/favicon.ico",
-  "/favicon-32x32.png",
-  "/favicon-16x16.png",
-  "/apple-touch-icon.png",
-];
-
-// install — cache static assets
+// install — fetch and cache the offline page specifically
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS))
+    caches.open(CACHE_NAME).then((cache) => {
+      return fetch(OFFLINE_URL).then((response) => {
+        return cache.put(OFFLINE_URL, response);
+      });
+    })
   );
   self.skipWaiting();
 });
 
-// activate — clean old caches
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
@@ -29,14 +22,17 @@ self.addEventListener("activate", (event) => {
   self.clients.claim();
 });
 
-// fetch — serve from cache, fall back to network, fall back to offline
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
 
-  // only cache assets, never pages
   if (event.request.mode === "navigate") {
     event.respondWith(
-      fetch(event.request).catch(() => caches.match(OFFLINE_URL))
+      fetch(event.request).catch(() =>
+        caches.match(OFFLINE_URL).then((cached) => {
+          if (cached) return cached;
+          return new Response("You are offline", { status: 503 });
+        })
+      )
     );
     return;
   }
