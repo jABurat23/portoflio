@@ -61,4 +61,4 @@ export default function Cursor() {
       <motion.div style={{ position: "fixed", top: dotY, left: dotX, width: 4, height: 4, background: "var(--accent)", borderRadius: "50%", pointerEvents: "none", zIndex: 9999, translateX: "-50%", translateY: "-50%" }} />
     </>
   );
-}
+} 
