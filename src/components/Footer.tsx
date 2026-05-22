@@ -12,7 +12,7 @@ function LiveClock() {
 
   useEffect(() => {
     // fetch IP-based location silently — no permission needed
-    fetch("https://ipapi.co/json/")
+    fetch("/api/location")
       .then((r) => r.json())
       .then((data) => {
         const lat = parseFloat(data.latitude).toFixed(4);

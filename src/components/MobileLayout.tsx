@@ -439,7 +439,7 @@ function MobileFooter() {
   }, [visible]);
 
   useEffect(() => {
-    fetch("https://ipapi.co/json/").then(r => r.json()).then(data => {
+    fetch("/api/location").then(r => r.json()).then(data => {
       const lat = parseFloat(data.latitude).toFixed(4);
       const lon = parseFloat(data.longitude).toFixed(4);
       setCoords({ lat: `${Math.abs(parseFloat(lat))}°${parseFloat(lat) >= 0 ? "N" : "S"}`, lon: `${Math.abs(parseFloat(lon))}°${parseFloat(lon) >= 0 ? "E" : "W"}`, city: data.city || "unknown" });

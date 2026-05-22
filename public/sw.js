@@ -33,22 +33,21 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
 
+  // only cache assets, never pages
+  if (event.request.mode === "navigate") {
+    event.respondWith(
+      fetch(event.request).catch(() => caches.match(OFFLINE_URL))
+    );
+    return;
+  }
+
   event.respondWith(
     fetch(event.request)
       .then((response) => {
-        // cache successful responses
         const clone = response.clone();
         caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
         return response;
       })
-      .catch(() =>
-        caches.match(event.request).then((cached) => {
-          if (cached) return cached;
-          // if navigating to a page and offline, show offline page
-          if (event.request.mode === "navigate") {
-            return caches.match(OFFLINE_URL);
-          }
-        })
-      )
+      .catch(() => caches.match(event.request))
   );
 });
