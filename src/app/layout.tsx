@@ -3,6 +3,7 @@ import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/components/ThemeProvider";
 import CustomCursor from "@/components/CustomCursor";
+import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 
 const ibmMono = IBM_Plex_Mono({
   subsets: ["latin"],
@@ -58,8 +59,13 @@ export const metadata: Metadata = {
   ],
   apple: "/apple-touch-icon.png",
   shortcut: "/favicon.ico",
-},
+  },
+  manifest: "/manifest.json",
 };  
+
+export const viewport = {
+  themeColor: "#0a0a0c",
+};
 
 export default function RootLayout({
   children,
@@ -89,6 +95,7 @@ export default function RootLayout({
         <ThemeProvider>
           {children}
           <CustomCursor />
+            <ServiceWorkerRegister />
         </ThemeProvider>
       </body>
     </html>
